@@ -50,7 +50,9 @@ def query(request):
     if request.method == 'POST':
         query = request.POST.get('query', '')
         response = get_response(query)
-        context = {'query': query, 'response': response}
+        context = {
+            'query': query, 'response': response
+        }
         return render(request, 'response.html', context)
     else:
         return render(request, 'query.html')
