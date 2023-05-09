@@ -8,7 +8,10 @@ def home(request):
 def query(request):
     if request.method == 'POST':
         query = request.POST.get('query', '')
-        response = get_response(query)
+        if not query:
+            response = "Please enter something"
+        else:
+            response = get_response(query)
         context = {
             'query': query, 'response': response
         }
