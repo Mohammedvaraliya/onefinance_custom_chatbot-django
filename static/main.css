@@ -1,0 +1,40 @@
+.conversation {
+    background-color: #f1f0f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.conversation p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.conversation p:first-child {
+    margin-bottom: 5px;
+}
+
+#query-form {
+    margin-bottom: 10px;
+}
+
+#query {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 70%;
+    margin-right: 5px;
+}
+
+#query[type="submit"] {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#query[type="submit"]:hover {
+    background-color: #45a049;
+}

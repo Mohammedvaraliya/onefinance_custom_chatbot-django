@@ -1,14 +1,42 @@
 {% extends 'main.html' %}
 
-
 {% block content %}
-
     <h1>Ask Any Query Related to 1finance</h1>
-    <form method="post" action="{% url 'query' %}">
+    <form id="query-form">
         {% csrf_token %}
         <label for="query">Query:</label>
         <input type="text" name="query" id="query">
         <input type="submit" value="Submit">
     </form>
-    
-{% endblock content %}
+    <div id="query-response"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            $('#query-form').submit(function(event) {
+              event.preventDefault(); // prevent default form submission
+              var query = $('#query').val();
+              if (!query) {
+                $('#query-response').text('Please enter something');
+                return;
+              }
+              $.ajax({
+                url: '{% url "query" %}',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                  var conversation = $('#query-response').html();
+                  var newResponse = '<div class="conversation">' +
+                                    '<p><b>Query:</b> ' + response.query + '</p>' +
+                                    '<p><b>Response:</b> ' + response.response + '</p>' +
+                                    '</div>';
+                  $('#query-response').html(newResponse + conversation);
+                  $('#query').val(''); // clear the input field
+                }
+              });
+            });
+          });
+          
+          
+    </script>
+{% endblock %}

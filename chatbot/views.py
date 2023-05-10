@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .chatbot_logic import get_response
+from django.http import JsonResponse
 
 # Create your views here.
 def home(request):
@@ -12,9 +13,7 @@ def query(request):
             response = "Please enter something"
         else:
             response = get_response(query)
-        context = {
-            'query': query, 'response': response
-        }
-        return render(request, 'response.html', context)
+        data = {'query': query, 'response': response}
+        return JsonResponse(data)
     else:
         return render(request, 'query.html')
