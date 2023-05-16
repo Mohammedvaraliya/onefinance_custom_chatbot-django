@@ -18,7 +18,7 @@
       </div>
       <form id="chatbot-form" method="post" action="{% url 'query' %}">
           {% csrf_token %}
-          <input type="text" class="form-control mr-2" name="input_text" placeholder="Type your query related to MVLU college..." aria-label="Recipient's username" aria-describedby="button-addon2">
+          <input type="text" class="form-control mr-2" name="input_text" placeholder="Type your query related to 1 Finance..." aria-label="Recipient's username" aria-describedby="button-addon2">
           <button type="submit" class="btn btn-warning btn-lg ml-2" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
               <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
             </svg></button>
@@ -37,6 +37,7 @@
   function displayUserMessage(message) {
     const userMessage = `<p class="user-message">${message}</p>`;
     dialogueContainer.innerHTML += userMessage;
+    dialogueContainer.scrollTop = dialogueContainer.scrollHeight;
   }
 
   function displayBotMessage(message) {
@@ -61,10 +62,12 @@
     const formData = new FormData(form);
     const url = form.getAttribute('action');
     const inputText = formData.get('input_text').trim();
+    form.reset();
 
     if (!inputText) {
       const errorMessage = '<p class="error-message">Please enter a message.</p>';
       dialogueContainer.innerHTML += errorMessage;
+      dialogueContainer.scrollTop = dialogueContainer.scrollHeight;
       return;
     }
 
@@ -79,7 +82,6 @@
       .then(data => {
         removeLoader();
         displayBotMessage(data);
-        form.reset();
         dialogueContainer.scrollTop = dialogueContainer.scrollHeight;
       })
       .catch(error => console.error(error));
