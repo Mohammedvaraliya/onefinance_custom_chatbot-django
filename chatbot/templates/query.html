@@ -1,42 +1,89 @@
 {% extends 'main.html' %}
+{% load static %}
+
 
 {% block content %}
-    <h1>Ask Any Query Related to 1finance</h1>
-    <form id="query-form">
-        {% csrf_token %}
-        <label for="query">Query:</label>
-        <input type="text" name="query" id="query">
-        <input type="submit" value="Submit">
-    </form>
-    <div id="query-response"></div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function() {
-            $('#query-form').submit(function(event) {
-              event.preventDefault(); // prevent default form submission
-              var query = $('#query').val();
-              if (!query) {
-                $('#query-response').text('Please enter something');
-                return;
-              }
-              $.ajax({
-                url: '{% url "query" %}',
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                  var conversation = $('#query-response').html();
-                  var newResponse = '<div class="conversation">' +
-                                    '<p><b>Query:</b> ' + response.query + '</p>' +
-                                    '<p><b>Response:</b> ' + response.response + '</p>' +
-                                    '</div>';
-                  $('#query-response').html(newResponse + conversation);
-                  $('#query').val(''); // clear the input field
-                }
-              });
-            });
-          });
+  <div class="App">
+    <div class="header">
+      <img src='{% static 'images/logo-white.webp' %}' alt="Logo" class="logo" />
+      <h1 class="title">1Financebot</h1>
+    </div>
+
+    <div id="chatbot-container">
+      <div id="chatbot-dialogue">
+          <p class="bot-message"><strong>Bot:</strong> {{ greeting }}, how can I help you today?</p>
+          <p class="bot-message"><strong>Bot:</strong> I am 1Financebot, a language model AI designed to assist you with any queries you may have regarding personal finance.</p>
+
+      </div>
+      <form id="chatbot-form" method="post" action="{% url 'query' %}">
+          {% csrf_token %}
+          <input type="text" class="form-control mr-2" name="input_text" placeholder="Type your query related to MVLU college..." aria-label="Recipient's username" aria-describedby="button-addon2">
+          <button type="submit" class="btn btn-warning btn-lg ml-2" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+              <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+            </svg></button>
           
-          
-    </script>
+      </form>
+    </div>
+
+  </div>
 {% endblock %}
+
+{% block js %}
+<script>
+  const form = document.getElementById('chatbot-form');
+  const dialogueContainer = document.getElementById('chatbot-dialogue');
+
+  function displayUserMessage(message) {
+    const userMessage = `<p class="user-message">${message}</p>`;
+    dialogueContainer.innerHTML += userMessage;
+  }
+
+  function displayBotMessage(message) {
+    const botMessage = `<p class="bot-message"><strong>Bot:</strong> ${message}</p>`;
+    dialogueContainer.innerHTML += botMessage;
+  }
+
+  function displayLoader() {
+    const loader = '<div class="dot-pulse"></div>';
+    dialogueContainer.innerHTML += loader;
+  }
+
+  function removeLoader() {
+    const loaders = dialogueContainer.getElementsByClassName('dot-pulse');
+    if (loaders.length > 0) {
+      loaders[loaders.length - 1].remove();
+    }
+  }
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const url = form.getAttribute('action');
+    const inputText = formData.get('input_text').trim();
+
+    if (!inputText) {
+      const errorMessage = '<p class="error-message">Please enter a message.</p>';
+      dialogueContainer.innerHTML += errorMessage;
+      return;
+    }
+
+    displayUserMessage(inputText);
+    displayLoader();
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.text())
+      .then(data => {
+        removeLoader();
+        displayBotMessage(data);
+        form.reset();
+        dialogueContainer.scrollTop = dialogueContainer.scrollHeight;
+      })
+      .catch(error => console.error(error));
+    });
+</script>
+
+{% endblock js %}
