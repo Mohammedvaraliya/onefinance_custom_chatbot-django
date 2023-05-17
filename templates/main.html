@@ -20,8 +20,16 @@
   </head>
 
   <body>
+
+    <div class="App">
+      <div class="header">
+        <img src='{% static 'images/logo-white.webp' %}' alt="Logo" class="logo" />
+        <h1 class="title">1Financebot</h1>
+      </div>
     
         {% block content %}{% endblock content %}
+
+      </div>
 
     {% block js %}{% endblock js %}
 

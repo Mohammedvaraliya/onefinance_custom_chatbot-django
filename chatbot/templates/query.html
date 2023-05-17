@@ -4,12 +4,6 @@
 
 {% block content %}
 
-  <div class="App">
-    <div class="header">
-      <img src='{% static 'images/logo-white.webp' %}' alt="Logo" class="logo" />
-      <h1 class="title">1Financebot</h1>
-    </div>
-
     <div id="chatbot-container">
       <div id="chatbot-dialogue">
           <p class="bot-message"><strong>Bot:</strong> {{ greeting }}, how can I help you today?</p>
@@ -25,8 +19,7 @@
           
       </form>
     </div>
-
-  </div>
+    
 {% endblock %}
 
 {% block js %}
