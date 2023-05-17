@@ -19,7 +19,8 @@ def query(request):
     if request.method == 'POST':
         query = request.POST.get('input_text', '')
         response = get_response(query)
-        return HttpResponse(response)
+        response = response.replace('\n', '<br>')
+        return HttpResponse(response, content_type="text/html")
     else:
         context = {
             'greeting': greeting
