@@ -293,89 +293,60 @@ h1 {
     }
 } */
 
-.dot-pulse {
-    position: relative;
-    margin-left: 15px;
-    left: -9999px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #070028;
-    color: #06001e;
-    box-shadow: 9999px 0 0 -5px;
-    animation: dot-pulse 1.5s infinite linear;
-    animation-delay: 0.25s;
+.loader-container{
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
-.dot-pulse::before,
-.dot-pulse::after {
-    content: "";
-    display: inline-block;
+.loader,
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    animation-fill-mode: both;
+    animation: bblFadInOut 1.8s infinite ease-in-out;
+}
+
+.loader {
+    color: #000000;
+    font-size: 7px;
+    position: relative;
+    text-indent: -9999em;
+    transform: translateZ(0);
+    animation-delay: -0.16s;
+    margin-left: 20px;
+}
+
+.loader:before,
+.loader:after {
+    content: '';
     position: absolute;
     top: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #070024;
-    color: #05001b;
 }
 
-.dot-pulse::before {
-    box-shadow: 9984px 0 0 -5px;
-    animation: dot-pulse-before 1.5s infinite linear;
-    animation-delay: 0s;
+.loader:before {
+    left: -3.5em;
+    animation-delay: -0.32s;
 }
 
-.dot-pulse::after {
-    box-shadow: 10014px 0 0 -5px;
-    animation: dot-pulse-after 1.5s infinite linear;
-    animation-delay: 0.5s;
+.loader:after {
+    left: 3.5em;
 }
 
-@keyframes dot-pulse-before {
-    0% {
-        box-shadow: 9984px 0 0 -5px;
-    }
+@keyframes bblFadInOut {
 
-    30% {
-        box-shadow: 9984px 0 0 2px;
-    }
-
-    60%,
+    0%,
+    80%,
     100% {
-        box-shadow: 9984px 0 0 -5px;
+        box-shadow: 0 2.5em 0 -1.3em
+    }
+
+    40% {
+        box-shadow: 0 2.5em 0 0
     }
 }
 
-@keyframes dot-pulse {
-    0% {
-        box-shadow: 9999px 0 0 -5px;
-    }
-
-    30% {
-        box-shadow: 9999px 0 0 2px;
-    }
-
-    60%,
-    100% {
-        box-shadow: 9999px 0 0 -5px;
-    }
-}
-
-@keyframes dot-pulse-after {
-    0% {
-        box-shadow: 10014px 0 0 -5px;
-    }
-
-    30% {
-        box-shadow: 10014px 0 0 2px;
-    }
-
-    60%,
-    100% {
-        box-shadow: 10014px 0 0 -5px;
-    }
-}
 
 /* Mobile styles */
 

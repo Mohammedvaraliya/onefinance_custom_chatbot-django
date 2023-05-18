@@ -39,12 +39,13 @@
   }
 
   function displayLoader() {
-    const loader = '<div class="dot-pulse"></div>';
+    const loader = '<div class="loader-container"><div class="loader"></div></div>';
     dialogueContainer.innerHTML += loader;
+    dialogueContainer.scrollTop = dialogueContainer.scrollHeight;
   }
 
   function removeLoader() {
-    const loaders = dialogueContainer.getElementsByClassName('dot-pulse');
+    const loaders = dialogueContainer.getElementsByClassName('loader');
     if (loaders.length > 0) {
       loaders[loaders.length - 1].remove();
     }
