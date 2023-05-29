@@ -104,7 +104,7 @@
     width: 60%;
 }
 
-#chatbot-form input[type="text"] {
+#chatbot-form textarea {
     width: 100%;
     padding: 10px;
     border: none;
@@ -112,7 +112,9 @@
     background-color: #eee;
     font-size: 16px;
     color: #333;
+    resize: vertical;
     margin-right: 10px;
+    resize: none;
 }
 
 #chatbot-form button[type="submit"] {
