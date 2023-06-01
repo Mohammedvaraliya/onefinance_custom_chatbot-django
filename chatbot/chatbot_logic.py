@@ -1,5 +1,5 @@
 from llama_index import SimpleDirectoryReader, GPTListIndex, readers, GPTSimpleVectorIndex, LLMPredictor, PromptHelper, ServiceContext
-from langchain import OpenAI
+from langchain.chat_models import ChatOpenAI
 import os
 import dotenv
 
@@ -7,9 +7,9 @@ dotenv.load_dotenv()
 
 def construct_index():
     # set maximum input size
-    max_input_size = 4096
+    max_input_size = 500
     # set number of output tokens
-    num_outputs = 2000
+    num_outputs = 500
     # set maximum chunk overlap
     max_chunk_overlap = 20
     # set chunk size limit
@@ -21,7 +21,7 @@ def construct_index():
     prompt_helper = PromptHelper(max_input_size, num_outputs, max_chunk_overlap, chunk_size_limit=chunk_size_limit)
 
     # define LLM
-    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=num_outputs))
+    llm_predictor = LLMPredictor(llm=ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", max_tokens=num_outputs))
 
     directory_path = "context_data/data"
     documents = SimpleDirectoryReader(directory_path).load_data()

@@ -358,12 +358,12 @@ h1 {
     }
 
     #chatbot-dialogue {
-        width: 90%;
-        height: 60%;
+        width: 95%;
+        height: 100%;
     }
 
     #chatbot-form {
-        width: 90%;
+        width: 95%;
     }
 
     #chatbot-form input[type="text"] {
